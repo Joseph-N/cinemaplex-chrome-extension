@@ -57,6 +57,9 @@ var showTimes = function(id, cinemas){
 }
 
 var requestCinemas = function(id){
+  // remove previously appended cinemas
+  $('#cinemas').html("");
+  
   $.mobile.loading("show",{
     text: "Loading"
   });

@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Getting Started Extension's Popup</title>
+    <link href="jquery-mobile.css" rel="stylesheet" type="text/css">
+    <style>
+      body{
+        min-height: 620px;
+        min-width: 400px;
+      }
+      img{
+        max-height: none !important;
+      }
+      ::-webkit-scrollbar { width: 3px; height: 3px;}
+      ::-webkit-scrollbar-button {  background-color: #666; }
+      ::-webkit-scrollbar-track {  background-color: #999;}
+      ::-webkit-scrollbar-track-piece { background-color: #ffffff;}
+      ::-webkit-scrollbar-thumb { height: 50px; background-color: #666; border-radius: 3px;}
+      ::-webkit-scrollbar-corner { background-color: #999;}}
+      ::-webkit-resizer { background-color: #666;}
+
+      iframe {
+          border: none;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+    <script src="jquery.js"></script>
+    <script src="jquery-mobile.js"></script>
+    <script src="popup.js"></script>
+
+  </head>
+  <body>
+    <div data-role="page" data-theme="b" id="page1" class="pages">
+
+      <div data-role="header" data-position="fixed">
+        <h1>Cinemaplex</h1>
+      </div><!-- /header -->
+
+      <div role="main" class="ui-content">
+        <h3>Today in Cinemas</h3>
+      <ul data-role="listview" data-inset="true" id="movies">
+      </ul>
+      </div><!-- /content -->
+
+      <div data-role="footer">
+      </div><!-- /footer -->
+
+    </div><!-- /page -->
+
+    <!-- Start of second page: #two -->
+<div data-role="page" id="page2" data-theme="b" class="pages">
+
+  <div data-role="header" data-position="fixed">
+    <a href="#page1" data-direction="reverse"  data-icon="arrow-l" data-theme="b">Back</a>
+    <h1>Movie</h1>
+    <a data-icon="video" data-theme="b" href="#popupVideo" data-rel="popup" data-position-to="window">Trailer</a>
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+  <div class="ui-grid-solo">
+      <div class="ui-block-a" style="text-align: center;">
+        <img src="" id="movie-backdrop">
+      </div>
+  </div>
+    <h2 id="movie-title"></h2>
+    <p id="movie-description"></p>
+<div data-role="popup" id="popupVideo" data-overlay-theme="b" data-theme="a" data-tolerance="15,15" class="ui-content">
+  <iframe width="497" height="298"  src="" frameborder="0" allowfullscreen></iframe>
+</div>
+    <h3>Cinemas</h3>
+    <ul data-role="listview" data-inset="true" id="cinemas">
+    </ul>
+    <p><a href="#page1" data-direction="reverse"  data-transition="slide" class="ui-btn ui-shadow ui-corner-all ui-btn-b">Back</a></p>
+
+  </div><!-- /content -->
+  <div data-role="footer">
+  </div><!-- /footer -->
+</div><!-- /page two -->
+</div>
+  </body>
+</html>
+

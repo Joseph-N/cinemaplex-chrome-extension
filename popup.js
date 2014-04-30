@@ -1,6 +1,10 @@
 var cinemaplexApp = {
     imageUrl: function (name, size) {
-        return 'http://image.tmdb.org/t/p/' + size + name;
+        if(name){
+            return 'http://image.tmdb.org/t/p/' + size + name;
+        }else{
+             return 'images/film_reel.png'
+        }           
     },
 
     resetImage: function () {
@@ -8,20 +12,30 @@ var cinemaplexApp = {
     },
 
     resetView: function () {
+        $('#movie-poster').html("");
         $('#cinemas').html("");
         $('#movie-title').text("");
         $('#movie-description').text("");
         $('#movie-backdrop').attr('src', '');
     },
 
-    lazyLoadImage: function (url) {
+    lazyLoadImage: function (url, type) {
         cinemaplexApp.resetImage();
+         $('#movie-poster').hide();
 
         var img = new Image();
-        $(img).load(function () {
-            $('#movie-backdrop').css("width", "100%").attr("src", img.src);
-        });
-        img.src = url ? cinemaplexApp.imageUrl(url, 'w780') : 'http://placehold.it/400x225';
+        if(type == 'backdrop'){
+            $(img).load(function () {
+                $('#movie-backdrop').css("width", "100%").attr("src", img.src);
+                $('#movie-poster').show();
+            });
+            img.src = url ? cinemaplexApp.imageUrl(url, 'w780') : 'images/highlight-reel.jpg';
+        }else{
+            $(img).load(function () {
+                $('#movie-poster').css("width", "100%").attr("src", img.src);
+            });
+            img.src = url ? cinemaplexApp.imageUrl(url, 'w92') : 'images/film_reel.png'; 
+        }
     },
 
     showTimes: function (id, cinemas) {
@@ -118,7 +132,8 @@ var cinemaplexApp = {
             $('#popupVideo').html("<p>Trailer not found :-(</p>");
         }
 
-        cinemaplexApp.lazyLoadImage(data.backdrop);
+        cinemaplexApp.lazyLoadImage(data.backdrop, 'backdrop');
+        cinemaplexApp.lazyLoadImage(data.poster, 'poster');
         cinemaplexApp.requestCinemas(data.id);
     },
 
@@ -170,12 +185,16 @@ var popupVideo = {
 
 $(document).on('ready', function () {
     cinemaplexApp.fetchMovies();
+    // chrome.browserAction.setBadgeText({text: '5'});
 });
 
 $(document).on("click", "a.movie-item", function () {
     var element = $(this);
-    cinemaplexApp.resetView();
     cinemaplexApp.showMovie(element);
+});
+
+$(document).on("click", "a#page1", function () {
+    cinemaplexApp.resetView();
 });
 
 
@@ -195,3 +214,9 @@ $(document).on("pagecreate", function () {
         }
     });
 });
+
+var i = 0;
+window.setInterval(function() {
+  chrome.browserAction.setBadgeText({text:String(i)});
+  i++;
+}, 1000);
